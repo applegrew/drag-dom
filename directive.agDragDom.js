@@ -18,7 +18,14 @@
 				
 				var copy, h, w, lastX, currentX, last2X, last2Y;
 				var dirChecker;
+				var mouseX, mouseY;
 				el.on('dragstart', function (event) {
+					if (isFirefox) {
+						$document.on("dragover.agDD", function(event){
+							mouseX = event.originalEvent.clientX;
+							mouseY = event.originalEvent.clientY;
+						});
+					}
 					lastX = -1;
 					last2X = [-1, -1];
 					last2Y = [-1, -1];
@@ -49,6 +56,10 @@
 					}, 300);
 				});
 				el.on('drag', function (event) {
+					if (isFirefox) {
+						currentX = mouseX;
+						y = mouseY;
+					}
 					currentX = event.originalEvent.clientX;
 					last2X[1] = last2X[0];
 					last2X[0] = currentX - (w / 2);
