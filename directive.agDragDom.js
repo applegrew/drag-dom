@@ -3,7 +3,7 @@
 	var app = angular.module('com.applegrew.directive', []);
 
 	var instances = 0;
-	var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;;
+	var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 	app.directive('agDragDom', function ($interval, $timeout, $document) {
 		return {
 			restrict: 'A',
@@ -21,6 +21,7 @@
 				var dirChecker;
 				var mouseX, mouseY;
 				el.on('dragstart', function (event) {
+					console.info('dragstart, isFirefox', isFirefox);
 					if (isFirefox) {
 						$document.on("dragover.agDD", function(event){
 							mouseX = event.originalEvent.clientX;
@@ -35,7 +36,6 @@
 						display: 'block',
 						'z-index': 1000,
 						'background-color': el.css('background-color'),
-						padding: '5px',
 						'box-shadow': '0 0 5px rgba(0, 0, 0, .5)',
 						'border-color': el.css('border-color'),
 						'transition': 'transform 0.5s ease-out, opacity 1s ease-out',
@@ -57,6 +57,7 @@
 					}, 300);
 				});
 				el.on('drag', function (event) {
+					console.info('drag, isFirefox', isFirefox);
 					var y;
 					if (isFirefox) {
 						currentX = mouseX;
@@ -78,6 +79,7 @@
 					});
 				});
 				el.on('dragend', function () {
+					console.info('draend, isFirefox', isFirefox);
 					if (isFirefox)
 						$document.off('.agDD');
 					$interval.cancel(dirChecker);
