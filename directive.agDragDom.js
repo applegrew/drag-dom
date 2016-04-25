@@ -3,7 +3,8 @@
 	var app = angular.module('com.applegrew.directive', []);
 
 	var instances = 0;
-	app.directive('agDragDom', function ($interval, $timeout) {
+	var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;;
+	app.directive('agDragDom', function ($interval, $timeout, $document) {
 		return {
 			restrict: 'A',
 			link: function ($scope, el, attrs) {
@@ -56,15 +57,18 @@
 					}, 300);
 				});
 				el.on('drag', function (event) {
+					var y;
 					if (isFirefox) {
 						currentX = mouseX;
 						y = mouseY;
+					} else {
+						currentX = event.originalEvent.clientX;
+						y = event.originalEvent.clientY;
 					}
-					currentX = event.originalEvent.clientX;
+
 					last2X[1] = last2X[0];
 					last2X[0] = currentX - (w / 2);
 					
-					var y = event.originalEvent.clientY;
 					last2Y[1] = last2Y[0];
 					last2Y[0] = y - h - 10 + $(window).scrollTop();
 
@@ -74,6 +78,8 @@
 					});
 				});
 				el.on('dragend', function () {
+					if (isFirefox)
+						$document.off('.agDD');
 					$interval.cancel(dirChecker);
 					var localCopy = copy;
 					localCopy.offset({
