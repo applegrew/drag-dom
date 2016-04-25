@@ -26,10 +26,10 @@
 						position: 'absolute',
 						display: 'block',
 						'z-index': 1000,
-						'background-color': 'white',
+						'background-color': el.css('background-color'),
 						padding: '5px',
 						'box-shadow': '0 0 5px rgba(0, 0, 0, .5)',
-						'border-color': '#ddd',
+						'border-color': el.css('border-color'),
 						'transition': 'transform 0.5s ease-out, opacity 1s ease-out',
 						'transform-origin': '50% 50%',
 						'opacity': 1
