@@ -27,6 +27,7 @@
 							mouseX = event.originalEvent.clientX;
 							mouseY = event.originalEvent.clientY;
 						});
+						event.originalEvent.dataTransfer.setData('application/dummy', "Appease god FF");
 					}
 					lastX = -1;
 					last2X = [-1, -1];
